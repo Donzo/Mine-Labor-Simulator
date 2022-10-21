@@ -1,0 +1,121 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+import '@chainlink/contracts/src/v0.8/ChainlinkClient.sol';
+import '@chainlink/contracts/src/v0.8/ConfirmedOwner.sol';
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Ore is ERC20, ERC20Burnable, Ownable {
+    constructor() ERC20("Ore", "ORE") {}
+
+    uint public mintAmount;
+    address public sendTo;
+
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
+
+   // function prepareMint(address _address, uint _mintAmount) public {
+     //   sendTo = _address;
+      //  mintAmount = _mintAmount;
+       // mint(sendTo, mintAmount);
+    //}
+    
+}
+
+contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
+    using Chainlink for Chainlink.Request;
+
+    uint256 public ore;
+    bytes32 private jobId;
+    uint256 private fee;
+    string private userWallet;
+    address private userWalletAddress;
+    address private oreContractAddress;
+    string private apiURLStub;
+    string public queryString;
+
+    event RequestOreCount(bytes32 indexed requestId, uint256 volume);
+
+    constructor() ConfirmedOwner(msg.sender) {
+        setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
+        setChainlinkOracle(0xCC79157eb46F5624204f47AB42b3906cAA40eaB7);
+        jobId = 'ca98366cc7314957b8c012c72f05aeeb';
+        fee = (1 * LINK_DIVISIBILITY) / 10; // 0,1 * 10**18 (Varies by network and job)
+        apiURLStub = 'https://minelaborsimulator.com/code/php/mint-check.php?&INT=true&wallet=';
+    }
+
+    
+    function requestOreCount(address queryAddress) public returns (bytes32 requestId) {
+        Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        
+        //Get Query Address
+        userWalletAddress = queryAddress;
+
+        //Form Prefix
+        string memory prefix = "0x";
+        //Turn Address into String
+        string memory addressToString = toAsciiString(queryAddress);
+        //req.add('get', 'https://minelaborsimulator.com/code/php/mint-check.php?wallet=0xbacb58a5bd0e2df0b3d3e82a1c75ad565a417cd6&uINT=true');
+        //Join Prefix and Address (string)
+        string memory pQueryAddress = string.concat(prefix,addressToString);
+        //Join Query Stub with Address String to Query
+        
+        string memory fullRequest = string.concat(apiURLStub,pQueryAddress);
+        //Store full request for testing purposes
+        queryString = fullRequest;
+        
+        
+        req.add('get', fullRequest);
+        req.add('path', 'ore'); 
+
+        // Multiply the result by 1000000000000000000 to remove decimals
+        int256 timesAmount = 10**18;
+        req.addInt('times', timesAmount);
+
+        // Sends the request
+        return sendChainlinkRequest(req, fee);
+    }
+    
+
+    function fulfill(bytes32 _requestId, uint256 _ore) public recordChainlinkFulfillment(_requestId) {
+        emit RequestOreCount(_requestId, _ore);
+        ore = _ore;
+        //Dont forget to change this everytime you redeploy
+        oreContractAddress = 0x55E80662B320102ad869Ecc41Ac6a8692e473a0D;
+        //Also make ORE contract owned by this one.
+        
+        //Mint if More Than 1 Ore
+        if (ore > 0){
+            Ore oreContract = Ore(oreContractAddress);
+            oreContract.mint(userWalletAddress, ore);
+        }
+    }
+
+    function toAsciiString(address x) internal pure returns (string memory) {
+        bytes memory s = new bytes(40);
+        for (uint i = 0; i < 20; i++) {
+            bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));
+            bytes1 hi = bytes1(uint8(b) / 16);
+            bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));
+            s[2*i] = char(hi);
+            s[2*i+1] = char(lo);            
+        }
+        return string(s);
+    }
+
+    function char(bytes1 b) internal pure returns (bytes1 c) {
+        if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
+        else return bytes1(uint8(b) + 0x57);
+    }
+
+    /**
+     * Allow withdraw of Link tokens from the contract
+     */
+    function withdrawLink() public onlyOwner {
+        LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());
+        require(link.transfer(msg.sender, link.balanceOf(address(this))), 'Unable to transfer');
+    }
+}

@@ -50,13 +50,6 @@
        			checkIfCanMint();
 			})
 		}
-		async function checkIfCanMint() {
-			fetch('/code/php/mint-check.php?wallet=' + window['userAccountNumber'])
-			.then(response => response.text())
-   			.then((response) => {
-       			console.log("Mint CHeck is " + response);
-			})
-		}
 		async function switchNetwork(which){
 			//Polygon
 			var theChainID = '0x89';
