@@ -10,36 +10,28 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Ore is ERC20, ERC20Burnable, Ownable {
     constructor() ERC20("Ore", "ORE") {}
 
-    uint public mintAmount;
-    address public sendTo;
-
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
-   // function prepareMint(address _address, uint _mintAmount) public {
-     //   sendTo = _address;
-      //  mintAmount = _mintAmount;
-       // mint(sendTo, mintAmount);
-    //}
-    
 }
 
 contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
-    uint256 public ore;
+    uint256 private ore;
     bytes32 private jobId;
     uint256 private fee;
     string private userWallet;
     address private userWalletAddress;
     address private oreContractAddress;
     string private apiURLStub;
-    string public queryString;
+    string private queryString;
 
     event RequestOreCount(bytes32 indexed requestId, uint256 volume);
 
     constructor() ConfirmedOwner(msg.sender) {
+        //0x326C977E6efc84E512bB9C30f76E30c160eD06FB Goerli
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
         setChainlinkOracle(0xCC79157eb46F5624204f47AB42b3906cAA40eaB7);
         jobId = 'ca98366cc7314957b8c012c72f05aeeb';
@@ -84,7 +76,7 @@ contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
         emit RequestOreCount(_requestId, _ore);
         ore = _ore;
         //Dont forget to change this everytime you redeploy
-        oreContractAddress = 0x55E80662B320102ad869Ecc41Ac6a8692e473a0D;
+        oreContractAddress = 0x7253014676F552da1942D2710a21DdaF71400E84;
         //Also make ORE contract owned by this one.
         
         //Mint if More Than 1 Ore
