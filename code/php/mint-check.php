@@ -1,8 +1,9 @@
 <?php
 	//Get user account number, test ID, and pass percent (which is assigned when called)
-	if (isset($_GET['wallet'])) {
+	if (isset($_GET['wallet']) && isset($_GET['tkn'])) {
 		
 		$walletAddress = $_GET['wallet'];
+		$userToken = $_GET['tkn'];
 		$getuINT = false;
 		if ($_GET['uINT'] == true){
 			$getuINT = true;
@@ -21,8 +22,9 @@
 		*/
 		$bool_value = NULL;
 				
-		$stmt = $my_Db_Connection->prepare("SELECT * FROM users WHERE wallet = :wallet"); 
+		$stmt = $my_Db_Connection->prepare("SELECT * FROM users WHERE wallet = :wallet AND tkn = :token"); 
 		$stmt->bindParam(':wallet', $walletAddress);
+		$stmt->bindParam(':token', $userToken);
 		$stmt->execute();
 		$returnThis = NULL;
 		$ore = "0";
@@ -41,6 +43,14 @@
 		
 		$myJSON = json_encode($returnThis);
 		echo $myJSON;
+		
+		//Set Ore Count to Zero
+		/*
+		$stmt2 = $my_Db_Connection->prepare("UPDATE users SET ore = 0 WHERE wallet = :wallet AND tkn = :token"); 	
+		$stmt2->bindParam(':wallet', $walletAddress);
+		$stmt2->bindParam(':token', $userToken);
+		$stmt2->execute();
+		*/
 		$my_Db_Connection = NULL;
 	}
 	else{

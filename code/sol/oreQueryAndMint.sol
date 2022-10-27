@@ -3,64 +3,58 @@ pragma solidity ^0.8.13;
 
 import '@chainlink/contracts/src/v0.8/ChainlinkClient.sol';
 import '@chainlink/contracts/src/v0.8/ConfirmedOwner.sol';
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Ore is ERC20, ERC20Burnable, Ownable {
-    constructor() ERC20("Ore", "ORE") {}
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
-    }
-
+interface OreToken {
+    function mint(address, uint256) external;  
+    function transferOwnership(address) external; //from and to
 }
 
 contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
+    uint256 private fee;
     uint256 private ore;
     bytes32 private jobId;
-    uint256 private fee;
-    string private userWallet;
+    address private oreContractAddress; //SET IN CONSTRUCTOR, REMEMBER TO CHANGE IF DEPLOYING NEW ORE TOKEN
     address private userWalletAddress;
-    address private oreContractAddress;
-    string private apiURLStub;
-    string private queryString;
+    string internal apiURLStub;
+    string internal queryString;
+    string internal userToken;
+    string internal userWallet;
 
     event RequestOreCount(bytes32 indexed requestId, uint256 volume);
 
-    constructor() ConfirmedOwner(msg.sender) {
+    constructor() ConfirmedOwner(msg.sender) {   
         //0x326C977E6efc84E512bB9C30f76E30c160eD06FB Goerli
         setChainlinkToken(0x326C977E6efc84E512bB9C30f76E30c160eD06FB);
         setChainlinkOracle(0xCC79157eb46F5624204f47AB42b3906cAA40eaB7);
+        
+        //Change This if Deploying New ORE contract
+        oreContractAddress = 0xF59BA9FB6E66e8Ac957aF7bEB3ba15e7ebB314Fa;
+
         jobId = 'ca98366cc7314957b8c012c72f05aeeb';
         fee = (1 * LINK_DIVISIBILITY) / 10; // 0,1 * 10**18 (Varies by network and job)
-        apiURLStub = 'https://minelaborsimulator.com/code/php/mint-check.php?&INT=true&wallet=';
+        apiURLStub = "https://minelaborsimulator.com/code/php/mint-check.php?&INT=true&wallet=";
     }
-
-    
-    function requestOreCount(address queryAddress) public returns (bytes32 requestId) {
+    function requestOreCount(address _queryAddress, string memory _userToken) public returns (bytes32 requestId) {
         Chainlink.Request memory req = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
         
-        //Get Query Address
-        userWalletAddress = queryAddress;
+        userToken = _userToken; //Get DB Token
+        userWalletAddress = _queryAddress; //Get Query Address
 
-        //Form Prefix
-        string memory prefix = "0x";
-        //Turn Address into String
-        string memory addressToString = toAsciiString(queryAddress);
-        //req.add('get', 'https://minelaborsimulator.com/code/php/mint-check.php?wallet=0xbacb58a5bd0e2df0b3d3e82a1c75ad565a417cd6&uINT=true');
-        //Join Prefix and Address (string)
-        string memory pQueryAddress = string.concat(prefix,addressToString);
-        //Join Query Stub with Address String to Query
+        string memory prefix = "0x"; //Form Prefix for Wallet Address
+        string memory addressToString = toAsciiString(_queryAddress); //Turn Address into String for Concatination
+        string memory pQueryAddress = string.concat(prefix,addressToString); //Join Prefix and Stringified Wallet Address        
+        string memory fullRequest = string.concat(apiURLStub,pQueryAddress); //Join Query Stub with Address String to Query
+        string memory utPrefix = "&tkn="; //Name GET for DB Token
+        string memory fullUserToken = string.concat(utPrefix,userToken); //Join GET and DB Token
+        string memory fullRequestWithToken = string.concat(fullRequest,fullUserToken); //Join request with DB token
         
-        string memory fullRequest = string.concat(apiURLStub,pQueryAddress);
         //Store full request for testing purposes
-        queryString = fullRequest;
+        queryString = fullRequestWithToken;
         
-        
-        req.add('get', fullRequest);
+        req.add('get', fullRequestWithToken);
         req.add('path', 'ore'); 
 
         // Multiply the result by 1000000000000000000 to remove decimals
@@ -70,22 +64,30 @@ contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
         // Sends the request
         return sendChainlinkRequest(req, fee);
     }
-    
-
     function fulfill(bytes32 _requestId, uint256 _ore) public recordChainlinkFulfillment(_requestId) {
         emit RequestOreCount(_requestId, _ore);
         ore = _ore;
-        //Dont forget to change this everytime you redeploy
-        oreContractAddress = 0x7253014676F552da1942D2710a21DdaF71400E84;
-        //Also make ORE contract owned by this one.
-        
+   
         //Mint if More Than 1 Ore
         if (ore > 0){
-            Ore oreContract = Ore(oreContractAddress);
+            OreToken oreContract = OreToken(oreContractAddress);
             oreContract.mint(userWalletAddress, ore);
         }
     }
-
+    function transferOreContractOwnership(address _toAddress) public onlyOwner{ //Transfers ownership of the ORE contract.
+           OreToken oreContract = OreToken(oreContractAddress);
+           oreContract.transferOwnership(_toAddress);
+    }
+    function newOracle(address _oracle)public onlyOwner{ //Maybe need a new oracle someday.
+        setChainlinkOracle(_oracle);
+    }
+    function newjobId(bytes32 _jobId)public onlyOwner{ //Maybe need a new jobID someday.
+        jobId =_jobId;
+    }
+    function newAPIStub(string memory _apiURLStub)public onlyOwner{ //Maybe need a new API query stub.
+        apiURLStub = _apiURLStub;
+    }
+    //Turns address into a string.
     function toAsciiString(address x) internal pure returns (string memory) {
         bytes memory s = new bytes(40);
         for (uint i = 0; i < 20; i++) {
@@ -97,15 +99,12 @@ contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
         }
         return string(s);
     }
-
+    //Helps turn address into a string.
     function char(bytes1 b) internal pure returns (bytes1 c) {
         if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
         else return bytes1(uint8(b) + 0x57);
     }
-
-    /**
-     * Allow withdraw of Link tokens from the contract
-     */
+    //Withdraws Link from this contract
     function withdrawLink() public onlyOwner {
         LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());
         require(link.transfer(msg.sender, link.balanceOf(address(this))), 'Unable to transfer');

@@ -8,7 +8,7 @@ import '@chainlink/contracts/src/v0.8/ConfirmedOwner.sol';
 
 
 interface OreQ {
-    function requestOreCount(address) external;
+    function requestOreCount(address, string memory) external;
 }
 
 contract BuyLink is ConfirmedOwner{
@@ -17,14 +17,16 @@ contract BuyLink is ConfirmedOwner{
 
     address public constant LINK = 0x326C977E6efc84E512bB9C30f76E30c160eD06FB;
     address public constant WETH9 = 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6;
-    //This is where the LINK we buy will go.
-    address internal OreQuery = 0x3Ec661189DfC6778e5a2940507406b0A59190d49;
+    uint24 public constant poolFee = 3000;
+    address internal OreQuery = 0x9A0CE65C7691E500d3448e99f0B6d1851adC6998; //This is where the LINK we buy will go.
     address internal userAddress;
+    string internal userToken;
     uint256 internal LINKFee = 10000000000000000;
 
-    uint24 public constant poolFee = 3000;
-
     //Functions to change contract variables.
+    function setUserToken(string memory _userToken)public{ //Change User's DB Token to pass for Query.
+        userToken = _userToken;
+    }
     function setUserAddress(address _userAddress)public{
         userAddress = _userAddress;
     }
@@ -36,14 +38,12 @@ contract BuyLink is ConfirmedOwner{
     }
 
     constructor(ISwapRouter _swapRouter)ConfirmedOwner(msg.sender) {
-        swapRouter = _swapRouter;
-        //Goerli - 0xE592427A0AEce92De3Edee1F18E0157C05861564
+        swapRouter = _swapRouter; //0xE592427A0AEce92De3Edee1F18E0157C05861564
     }
 
     function swapExactOutputSingle(uint256 amountOut, uint256 amountInMaximum) external returns (uint256 amountIn) {
         
-        //Please sir, buy enough LINK to cover the fee.
-        require(amountOut >= LINKFee);
+        require(amountOut >= LINKFee); //Please sir, buy enough LINK to cover the fee.
 
         TransferHelper.safeTransferFrom(WETH9, msg.sender, address(this), amountInMaximum);
         TransferHelper.safeApprove(WETH9, address(swapRouter), amountInMaximum);
@@ -65,8 +65,8 @@ contract BuyLink is ConfirmedOwner{
 
         //Do the LINK request.
         OreQ oreQueryContract = OreQ(OreQuery);
-        oreQueryContract.requestOreCount(address(userAddress));
-   
+        oreQueryContract.requestOreCount(address(userAddress), userToken);
+
         //Return spare WETH to the user.
         if (amountIn < amountInMaximum) {
             TransferHelper.safeApprove(WETH9, address(swapRouter), 0);

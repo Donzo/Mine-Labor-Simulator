@@ -53,12 +53,13 @@
 			const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
 			const account = accounts[0];
 			
-			watchToken();
+			//watchToken();
 		
 			if (account){
 				ig.game.accountNum = account;
 				window['userAccountNumber'] = account;
 				storeAccountInDB();
+				ig.game.checkIfUserHasOre();
 			}
 			
 			//Create Web3 Object
@@ -67,10 +68,10 @@
 			//Get Provider
 			web3.eth.net.getId().then(
 				function(value) {
-					provider = value;
-					reportProvider();
   					console.log('provider: ' + provider);
-  					ig.game.startGame();						
+  					ig.game.startGame();
+  					provider = value;
+					reportProvider();						
   				}	
   			);			
 		}
@@ -145,38 +146,43 @@
 			}
 		}
 		function reportProvider(){
-			if (window.ethereum) {
-  		 		chainId = window.ethereum.chainId;
-  		 		console.log('chainID = ' + chainId)
+			
+			//Get chainId
+			if (window.ethereum){
+				chainId = window.ethereum.chainId;
 			}
-			if (chainId == "0xa86a" || provider == 43114){
-				networkName = "avalanche";
+			
+			//Get networkName		
+			if (chainId == "0x5" || provider == 5){
+  				networkName = "Goerli";
+  			}
+			else if (chainId == "0xa86a" || provider == 43114){
 				console.log('User is on Avalanche C-Chain.');
 			}
 			else if (chainId == "0x1" || provider == 1){
-  				console.log('User is on Ethereum Mainnet.');
   				networkName = "ethereum";
   			}
   			else if (chainId == "0x2a" || provider == 42){
-  				console.log('User is on Kovan Testnet.');
   				networkName = "kovan";
   			}
   			else if (chainId == "0x89" || provider == 137){
-  				console.log('User is on Polygon Network.');
   				networkName = "polygon";
   			}
   			else if (chainId == "0x4" || provider == 4){
-  				console.log('User is on Rinkeby Testnet.');
   				networkName = "rinkeby";
   			}
   			else if (chainId == "0xa4b1" || provider == 42161){
-  				console.log('User is on Arbitrum.');
   				networkName = "arbitrum";
   			}
+  			else if (window.ethereum) {
+  		 		chainId = window.ethereum.chainId;
+  		 		networkName = "Ethereum?";
+			}
   			else{
-  				alert('User is on unhandled network with ID number ' + provider + ' and chainid ' + chainId + '.');
+  				networkName = "unhandled network";
   			}
   			
+  			console.log('User is on ' + networkName + ' with ID number ' + provider + ' and chainid ' + chainId + '.');
 		}
 		
 		
