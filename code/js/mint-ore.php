@@ -148,7 +148,7 @@
 			ig.game.txtBoxTxtSize = 2;
 			ig.game.txtBoxHeight = .25;
 			ig.game.txtBoxTxt = "Success! Transaction Mined. Ore Extracted.";
-			
+			ig.game.checkIfUserHasOre();
 			
     		
     		/*/Loading wheel;

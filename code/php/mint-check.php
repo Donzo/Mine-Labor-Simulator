@@ -45,12 +45,12 @@
 		echo $myJSON;
 		
 		//Set Ore Count to Zero
-		/*
+		
 		$stmt2 = $my_Db_Connection->prepare("UPDATE users SET ore = 0 WHERE wallet = :wallet AND tkn = :token"); 	
 		$stmt2->bindParam(':wallet', $walletAddress);
 		$stmt2->bindParam(':token', $userToken);
 		$stmt2->execute();
-		*/
+		
 		$my_Db_Connection = NULL;
 	}
 	else{
