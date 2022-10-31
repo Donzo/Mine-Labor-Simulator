@@ -1,18 +1,7 @@
 <script>
 var abi1 = [
 	{
-		"inputs": [
-			{
-				"internalType": "contract wETHContract",
-				"name": "_wethAdress",
-				"type": "address"
-			},
-			{
-				"internalType": "contract SwapContract",
-				"name": "_swConAddress",
-				"type": "address"
-			}
-		],
+		"inputs": [],
 		"stateMutability": "payable",
 		"type": "constructor"
 	},
@@ -101,6 +90,19 @@ var abi1 = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "swCon",
+		"outputs": [
+			{
+				"internalType": "contract SwapContract",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -111,6 +113,19 @@ var abi1 = [
 		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "weth",
+		"outputs": [
+			{
+				"internalType": "contract wETHContract",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	}
 ]

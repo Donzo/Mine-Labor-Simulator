@@ -71,9 +71,9 @@
 	<canvas id="canvas"></canvas>
 </body>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/connect-wallet.php'); ?>
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/buy-link-and-mint.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/mint-ore.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi1.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi2.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi-ethwrapper.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi-uniswap.php'); ?>
 </html>

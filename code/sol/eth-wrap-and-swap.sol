@@ -15,27 +15,20 @@ interface SwapContract {
 }
 
 contract EthToOre is ConfirmedOwner{
-    wETHContract weth;
-    SwapContract swCon;
-    
+
+    wETHContract public constant weth = wETHContract(0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6);
+    SwapContract public constant swCon = SwapContract(0xD35c9101485A56A171c038282132556a95504A6E);
+
     uint256 private wethBalance;
     address private swapContract;
-    uint256 internal linkOut;
+    uint256 internal linkOut = 100000000000000000;
 
     //Set how much LINK you want from the swap contract
     function setLinkOut(uint256 _linkOut) public onlyOwner {
         linkOut = _linkOut;
     }
 
-    constructor(wETHContract _wethAdress, SwapContract _swConAddress)ConfirmedOwner(msg.sender) payable{
-        //Enter the address of the WETH contract on deployment
-        //0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6 - Goerli
-        weth = _wethAdress;
-        //Enter the address of the swap contract
-        //Currently 0x1194cd23DeF7B540EE44c5308eEdb26167869D59
-        swCon = _swConAddress;
-        linkOut = 10000000000000000;
-    }
+    constructor()ConfirmedOwner(msg.sender) payable{ }
 
     function mintOre(string memory _userToken) external payable {
         swCon.setUserAddress(msg.sender);

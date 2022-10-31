@@ -31,7 +31,7 @@ contract FetchOreCountAndMint is ChainlinkClient, ConfirmedOwner {
         setChainlinkOracle(0xCC79157eb46F5624204f47AB42b3906cAA40eaB7);
         
         //Change This if Deploying New ORE contract
-        oreContractAddress = 0xF59BA9FB6E66e8Ac957aF7bEB3ba15e7ebB314Fa;
+        oreContractAddress = 0x92C92a9E71a6CFcd39B621eb66804Ac28186849F;
 
         jobId = 'ca98366cc7314957b8c012c72f05aeeb';
         fee = (1 * LINK_DIVISIBILITY) / 10; // 0,1 * 10**18 (Varies by network and job)

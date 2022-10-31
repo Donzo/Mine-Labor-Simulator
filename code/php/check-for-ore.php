@@ -4,7 +4,7 @@
 	++$_SESSION['rocksSmashed'];
 	
 	//This sets how easy or hard it is to find rocks.  
-	$rockFindThresh = 98000;
+	$rockFindThresh = 94000;
 	
 	$randomNumber = (rand(1,100000));
 	if ($randomNumber >$rockFindThresh){
