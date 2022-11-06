@@ -19,7 +19,7 @@ I am thinking about an ORE release schedule, where ORE becomes harder to mine as
 <h2>VRF Intgration into ORE Smelting</h2>
 The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contracts that I am using:
 
-1. <a href='https://goerli.etherscan.io/address/0x7b36a198cbba1578148810accea29b8e51c5712c#code' target='_blank'>Iron Token</a>
-2. <a href='https://goerli.etherscan.io/address/0x4defceb0f286cd38d2afe2313aa34addbc94a102#code' target='_blank'>Buy Link for Smelter</a>
+1. <a href='https://goerli.etherscan.io/address/0x10328c8b9156a58c5f9beb6aa364b19f13f59282#code' target='_blank'>Iron Token</a>
+2. <a href='https://goerli.etherscan.io/address/0xabfdf7ba53c2ea0dc3383dc242381c35aa7f361a#code' target='_blank'>Buy Link for Smelter</a>
 
 More to come soon.
