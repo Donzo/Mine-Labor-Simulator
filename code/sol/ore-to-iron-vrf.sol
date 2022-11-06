@@ -4,7 +4,6 @@ pragma solidity ^0.8.13;
 import '@chainlink/contracts/src/v0.8/ConfirmedOwner.sol';
 import '@chainlink/contracts/src/v0.8/VRFV2WrapperConsumerBase.sol';
 
-
 interface oreToken {
     function transferFrom(address, address, uint) external returns (bool); //from to amount
     function allowance(address, address) external returns (uint256); //owner, spender
@@ -25,23 +24,21 @@ interface SwapContract {
     function swapExactOutputSingle(uint256, uint256) external;
 }
 
-
 contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
 
     event RequestSent(uint256 requestId, uint32 numWords);
     event RequestFulfilled(uint256 requestId, uint256[] randomWords, uint256 payment);
 
     wETHContract public constant weth = wETHContract(0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6);
-    SwapContract public constant swCon = SwapContract(0x9352D8eFC1513e5C9925b9b77bA3C2E9554d042B);
+    SwapContract public constant swCon = SwapContract(0x91Fe1517FDf17Ae2C338602d14A3E156013E61d2);
 
     address internal oreContractAddress = 0x92C92a9E71a6CFcd39B621eb66804Ac28186849F;
     oreToken oreTokenContract = oreToken(oreContractAddress);
 
-    //Change This if Deploying New IRON contract
-    address ironContractAddress = 0xe439833a738eE13042af6C9885224e99949d3df2;
+    address public ironContractAddress = 0xd020ee009eBa367b279546C9Ed47Ba49A0Bcb159;
     ironToken ironTokenContract = ironToken(ironContractAddress);
 
-    uint256 internal linkOut = 1300000000000000000;
+    uint256 internal linkIn = 1300000000000000000;
     uint256 public oreCount = 0;
     uint256 public oreAllowance;
     uint256 public s_randomRange;
@@ -49,9 +46,8 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
     address public msgSender;
     address public spender;
 
-    //Set how much LINK you want from the swap contract
-    function setLinkOut(uint256 _linkOut) public onlyOwner {
-        linkOut = _linkOut;
+    function setLinkIn(uint256 _linkIn) public onlyOwner {
+        linkIn = _linkIn;
     }
 
     struct RequestStatus {
@@ -59,13 +55,19 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
         bool fulfilled; // whether the request has been successfully fulfilled
         uint256[] randomWords;
     }
-
+    //Old one
     mapping(uint256 => RequestStatus) public s_requests; /* requestId --> requestStatus */
+    
+    //New one
+    mapping(uint256 => uint256) public s_requestIdToRandomWords; //Maps the request ID and stores the results
+    mapping(uint256 => uint256) public s_requestIdToOreAmount;
+    mapping(uint256 => address) public s_requestIdToAddress; //Maps the address
+    
+    uint256 public s_requestId;
 
     // past requests Id.
     uint256[] public requestIds;
     uint256 public lastRequestId;
-
 
     uint32 callbackGasLimit = 800000;
     uint16 requestConfirmations = 3;
@@ -77,16 +79,15 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
     address wrapperAddress = 0x708701a1DfF4f478de54383E49a627eD4852C816;
 
     constructor() ConfirmedOwner(msg.sender) VRFV2WrapperConsumerBase(linkAddress, wrapperAddress) payable{}
-    
 
-    function prepareSmelter(uint256 _oreAmount) external payable {
+    function loadSmelter(uint256 _oreAmount) external payable {
         //Check Allowance
         oreAllowance = oreTokenContract.allowance(msg.sender, address(this));
         require (oreAllowance >= _oreAmount, "Not enough ORE approved for transfer2 .");
 
         weth.deposit{value: msg.value}();
         weth.approve(address(swCon), msg.value);
-        swCon.swapExactOutputSingle(linkOut, msg.value);
+        swCon.swapExactOutputSingle(linkIn, msg.value);
         smeltOre(_oreAmount);
     }
 
@@ -102,11 +103,15 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
             requestRandomWords();
         }
     }
-    function mintIron(uint256 _amount) private{
-        ironTokenContract.mint(msgSender, _amount);
+    
+    function mintIron(address _msgSender, uint256 _amount) private{
+        ironTokenContract.mint(_msgSender, _amount);
     }
     function transferIronContractOwnership(address _toAddress) public onlyOwner{ //Transfers ownership of the IRON contract.
         ironTokenContract.transferOwnership(_toAddress);
+    }
+    function changeIronContractAddress(address _ironContractAddress) public onlyOwner {
+        ironContractAddress = _ironContractAddress;
     }
 
     function requestRandomWords() private returns (uint256 requestId) {
@@ -116,8 +121,16 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
             randomWords: new uint256[](0),
             fulfilled: false
         });
+        //Old Ones
         requestIds.push(requestId);
         lastRequestId = requestId;
+        
+        //New Ones
+        s_requestIdToAddress[requestId] = msg.sender;
+        s_requestIdToOreAmount[requestId] = oreCount;
+        // Store the latest requestId for this example.
+        s_requestId = requestId;
+
         emit RequestSent(requestId, numWords);
         return requestId;
     }
@@ -125,14 +138,15 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
     function fulfillRandomWords(uint256 _requestId, uint256[] memory _randomWords) internal override {
         require(s_requests[_requestId].paid > 0, 'request not found');
         s_requests[_requestId].fulfilled = true;
-        s_requests[_requestId].randomWords = _randomWords;
+        s_requests[_requestId].randomWords = _randomWords; //Old one
         s_randomRange = (_randomWords[0] % 100) + 1;
-        mintAlloy(s_randomRange);
+        s_requestIdToRandomWords[_requestId] = s_randomRange; // New one
+        mintAlloy(s_requestIdToRandomWords[_requestId], s_requestIdToOreAmount[_requestId], s_requestIdToAddress[_requestId]);
         emit RequestFulfilled(_requestId, _randomWords, s_requests[_requestId].paid);
     }
-    function mintAlloy(uint256 _ranNum) public{
+    function mintAlloy(uint256 _ranNum, uint256 _mintAmount, address _msgSender) public{
        if (_ranNum < 1000){
-           mintIron(oreCount);
+           mintIron(_msgSender, _mintAmount);
            withdrawLink();
        }
     }
