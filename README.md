@@ -15,3 +15,11 @@ The contracts have been deployed on Goerli. View them here:
 4. <a href='https://goerli.etherscan.io/address/0x92C92a9E71a6CFcd39B621eb66804Ac28186849F#code' target='_blank'>Ore Token Contract</a>
 
 I am thinking about an ORE release schedule, where ORE becomes harder to mine as supply grows. I also want to create more serverside checks to protect the integrity of the ORE supply. But the next step for me is to integrate VRF so the player can smelt ORE into random elements like iron, copper, or gold.
+
+<h2>VRF Intgration into ORE Smelting</h2>
+The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contracts that I am using:
+
+1. <a href='https://goerli.etherscan.io/address/0xd020ee009eba367b279546c9ed47ba49a0bcb159#code' target='_blank'>Iron Token</a>
+2. <a href='https://goerli.etherscan.io/address/0x91fe1517fdf17ae2c338602d14a3e156013e61d2#code' target='_blank'>Buy Link for Smelter</a>
+
+More to come soon.
