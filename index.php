@@ -47,6 +47,9 @@
 		var conBut = new Image();
 		conBut.src = 'media/buttons-and-logos/connect-button.png';
 		
+		var smeltShopInside = new Image();
+		smeltShopInside.src = 'media/smelt-shop-inside.png';
+		
 		function startTheGame(){
 			connectWallet();
 			//ig.game.startGame();
@@ -74,6 +77,7 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/mint-ore.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi1.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi2.php'); ?>
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi-ethwrapper.php'); ?>
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi-uniswap.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi3.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi4.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/smelt-ore.php'); ?>
 </html>

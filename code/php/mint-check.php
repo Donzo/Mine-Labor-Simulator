@@ -2,10 +2,11 @@
 	//Get user account number, test ID, and pass percent (which is assigned when called)
 	if (isset($_GET['wallet']) && isset($_GET['tkn'])) {
 		
+		$isArray = true;
 		$walletAddress = $_GET['wallet'];
 		$userToken = $_GET['tkn'];
 		$getuINT = false;
-		if ($_GET['uINT'] == true){
+		if ($_GET['INT'] == true){
 			$getuINT = true;
 		}
 		$ore = 0;
@@ -34,7 +35,7 @@
 		}
 		
 		if ($getuINT){
-			$ore = (int)$ore;
+			$ore = intVal($ore);
 			$returnThis = array('ore' => $ore);
 		}
 		else{
@@ -42,14 +43,20 @@
 		}
 		
 		$myJSON = json_encode($returnThis);
-		echo $myJSON;
 		
+		//Bracket for Fetch from Array
+		if ($isArray){
+			echo "[" . $myJSON . "]";
+		}
+		else{
+			echo $myJSON;
+		}	
 		//Set Ore Count to Zero
 		
-		$stmt2 = $my_Db_Connection->prepare("UPDATE users SET ore = 0 WHERE wallet = :wallet AND tkn = :token"); 	
-		$stmt2->bindParam(':wallet', $walletAddress);
-		$stmt2->bindParam(':token', $userToken);
-		$stmt2->execute();
+		//$stmt2 = $my_Db_Connection->prepare("UPDATE users SET ore = 0 WHERE wallet = :wallet AND tkn = :token"); 	
+		//$stmt2->bindParam(':wallet', $walletAddress);
+		//$stmt2->bindParam(':token', $userToken);
+		//$stmt2->execute();
 		
 		$my_Db_Connection = NULL;
 	}

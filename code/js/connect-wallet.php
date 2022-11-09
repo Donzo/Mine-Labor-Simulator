@@ -183,6 +183,7 @@
   			}
   			
   			console.log('User is on ' + networkName + ' with ID number ' + provider + ' and chainid ' + chainId + '.');
+  			getOreBalance();
 		}
 		
 		

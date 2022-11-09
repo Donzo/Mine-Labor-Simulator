@@ -147,6 +147,7 @@
 			ig.game.turnOffTextBoxTimer.set(2);
 			ig.game.txtBoxTxtSize = 2;
 			ig.game.txtBoxHeight = .25;
+			ig.game.pData.ore = 0;
 			ig.game.txtBoxTxt = "Success! Transaction Mined. Ore Extracted.";
 			ig.game.checkIfUserHasOre();
 			

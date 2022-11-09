@@ -59,9 +59,9 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
     mapping(uint256 => RequestStatus) public s_requests; /* requestId --> requestStatus */
     
     //New one
-    mapping(uint256 => uint256) public s_requestIdToRandomWords; //Maps the request ID and stores the results
-    mapping(uint256 => uint256) public s_requestIdToOreAmount;
-    mapping(uint256 => address) public s_requestIdToAddress; //Maps the address
+    mapping(uint256 => uint256) public mapIdToWords; //Maps Results to ID
+    mapping(uint256 => uint256) public mapIdToOreAmount; //Map Ore Amount to ID
+    mapping(uint256 => address) public mapIdToAddress; //Maps the address
     
     uint256 public s_requestId;
 
@@ -126,8 +126,8 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
         lastRequestId = requestId;
         
         //New Ones
-        s_requestIdToAddress[requestId] = msg.sender;
-        s_requestIdToOreAmount[requestId] = oreCount;
+        mapIdToAddress[requestId] = msg.sender;
+        mapIdToOreAmount[requestId] = oreCount;
         // Store the latest requestId for this example.
         s_requestId = requestId;
 
@@ -140,8 +140,8 @@ contract smeltingContract is VRFV2WrapperConsumerBase, ConfirmedOwner{
         s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords; //Old one
         s_randomRange = (_randomWords[0] % 100) + 1;
-        s_requestIdToRandomWords[_requestId] = s_randomRange; // New one
-        mintAlloy(s_requestIdToRandomWords[_requestId], s_requestIdToOreAmount[_requestId], s_requestIdToAddress[_requestId]);
+        mapIdToWords[_requestId] = s_randomRange; // New one
+        mintAlloy(mapIdToWords[_requestId], mapIdToOreAmount[_requestId], mapIdToAddress[_requestId]);
         emit RequestFulfilled(_requestId, _randomWords, s_requests[_requestId].paid);
     }
     function mintAlloy(uint256 _ranNum, uint256 _mintAmount, address _msgSender) public{
