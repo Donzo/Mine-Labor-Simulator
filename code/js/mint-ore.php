@@ -125,9 +125,10 @@
 			gasPrice: gasPriceEstimate,
 		}, function(){
 			ig.game.textBox = true;
-			ig.game.txtBoxTxt = "Extracting ore... Mining...";
+			ig.game.txtBoxTxt = "Extracting ore. . . Mining. . ";
 			ig.game.txtBoxTxtSize = 2;
 			ig.game.txtBoxHeight = .25;
+			ig.game.textBoxTicker = true;
 			/*var progressDiv = document.getElementById('progress-div');
 			progressDiv.style.margin = ".25em";	
 			progressDiv.style.textAlign = "center";	
@@ -149,6 +150,7 @@
 			ig.game.txtBoxHeight = .25;
 			ig.game.pData.ore = 0;
 			ig.game.txtBoxTxt = "Success! Transaction Mined. Ore Extracted.";
+			ig.game.textBoxTicker = false;
 			ig.game.checkIfUserHasOre();
 			
     		
