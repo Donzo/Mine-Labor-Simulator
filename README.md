@@ -19,7 +19,14 @@ I am thinking about an ORE release schedule, where ORE becomes harder to mine as
 <h2>VRF Intgration into ORE Smelting</h2>
 The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contracts that I am using:
 
-1. <a href='https://goerli.etherscan.io/address/0xd020ee009eba367b279546c9ed47ba49a0bcb159#code' target='_blank'>Iron Token</a>
-2. <a href='https://goerli.etherscan.io/address/0x91fe1517fdf17ae2c338602d14a3e156013e61d2#code' target='_blank'>Buy Link for Smelter</a>
+1. <a href='https://goerli.etherscan.io/address/0x9f659da618419a3baddb9a2a9cb2bb8a1584237f#code' target='_blank'>Smelting Contract</a>
+2. <a href='https://goerli.etherscan.io/address/0x91fe1517fdf17ae2c338602d14a3e156013e61d2#code' target='_blank'>Swap Contract for Smelter</a>
+3. <a href='https://goerli.etherscan.io/address/0xd020ee009eba367b279546c9ed47ba49a0bcb159#code' target='_blank'>Iron Token</a>
+4. <a href='https://goerli.etherscan.io/address/0x07fc989b730fd2f6fe72c9a3294213cea3da768e#code' target='_blank'>Copper Token</a>
+5. <a href='https://goerli.etherscan.io/address/0x2efe634fad801a68b86bbbf153935fd6222a1236#code' target='_blank'>Nickel Token</a>
+6. <a href='https://goerli.etherscan.io/address/0x01f1fb3293546e257c7fa94ff04b5ab314bdee50#code' target='_blank'>Gold Token</a>
+7. <a href='https://goerli.etherscan.io/address/0xffb97dc57c5d891560aae5af5460fcf69a217e64#code' target='_blank'>Platinum Token</a>
+
+
 
 More to come soon.
