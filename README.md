@@ -1,4 +1,4 @@
-# Mine-Labor-Simulator
+# Mine Labor Simulator
 Web 3 game and project for Chainlink Fall 2022 Hackathon. 
 
 Prove your work by mining blocks at <a href='https://minelaborsimulator.com/' target='_blank'> Mine Labor Simulator</a>. 
