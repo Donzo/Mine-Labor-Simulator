@@ -17,7 +17,9 @@ The contracts have been deployed on Goerli. View them here:
 I am thinking about an ORE release schedule, where ORE becomes harder to mine as supply grows. I also want to create more serverside checks to protect the integrity of the ORE supply. But the next step for me is to integrate VRF so the player can smelt ORE into random elements like iron, copper, or gold.
 
 <h2>VRF Intgration into ORE Smelting</h2>
+
 The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contracts that I am using:
+
 
 1. <a href='https://goerli.etherscan.io/address/0x9f659da618419a3baddb9a2a9cb2bb8a1584237f#code' target='_blank'>Smelting Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0x91fe1517fdf17ae2c338602d14a3e156013e61d2#code' target='_blank'>Swap Contract for Smelter</a>
@@ -29,6 +31,8 @@ The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contr
 
 
 <h2>VRF Integration in Item Creation</h2>
+
 Once you have METAL tokens created from smelting ORE tokens, you can build items. Items are NFTs that are created by expending metal tokens. Metadata for the item NFTs is stored onchain and created using Chainlink VRF.
+
 
 1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items Minting Contract</a>
