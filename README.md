@@ -28,5 +28,7 @@ The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contr
 7. <a href='https://goerli.etherscan.io/address/0xffb97dc57c5d891560aae5af5460fcf69a217e64#code' target='_blank'>Platinum Token</a>
 
 
+<h2>VRF Integration in Item Creation</h2>
+Once you have METAL tokens created from smelting ORE tokens, you can build items. Items are NFTs that are created by expending metal tokens. Metadata for the item NFTs is stored onchain and created using Chainlink VRF.
 
-More to come soon.
+1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items Minting Contract</a>
