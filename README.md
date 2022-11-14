@@ -11,7 +11,7 @@ In order to MINT the ORE tokens, the player <a href='https://github.com/Donzo/Mi
 
 <h3>Contracts for MINTING ORE</h3>
 
-The contracts have been deployed on Goerli. View them here:
+The contracts for MINTING ORE have been deployed on Goerli. View them here:
 
 1. <a href='https://goerli.etherscan.io/address/0xd14cCfdA73b3b9e98f872dC51aA05B5b80D900C4#code' target='_blank'>Wrap Eth and Pass to Swap Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0xD35c9101485A56A171c038282132556a95504A6E#code' target='_blank'>Swap WETH for LINK Fees Contract</a>
@@ -31,7 +31,7 @@ Once the smelter has been fueled and the player has transferred his or her ORE t
 
 <h3>Contracts for SMELTING ORE</h3>
 
-The contracts have been deployed on Goerli. View them here:
+The contracts for SMELTING ORE been deployed on Goerli. View them here:
 
 1. <a href='https://goerli.etherscan.io/address/0x9f659da618419a3baddb9a2a9cb2bb8a1584237f#code' target='_blank'>Smelting Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0x91fe1517fdf17ae2c338602d14a3e156013e61d2#code' target='_blank'>Swap Contract for Smelter</a>
@@ -41,10 +41,13 @@ The contracts have been deployed on Goerli. View them here:
 6. <a href='https://goerli.etherscan.io/address/0x01f1fb3293546e257c7fa94ff04b5ab314bdee50#code' target='_blank'>Gold Token</a>
 7. <a href='https://goerli.etherscan.io/address/0xffb97dc57c5d891560aae5af5460fcf69a217e64#code' target='_blank'>Platinum Token</a>
 
+After SMELTING the ORE tokens, the player will no longer have ORE tokens in his or her wallet. Instead the player will receive METAL tokens based on the VRF result. These METAL tokens will live in the player's Web3 wallet. <strong>But what can the player do with METAL tokens?</strong>
 
-<h2>VRF Integration in Item Creation</h2>
+<h2>Create NFT ITEMS with VRF Integration</h2>
 
-Once you have METAL tokens created from smelting ORE tokens, you can build items. Items are NFTs that are created by expending metal tokens. Metadata for the item NFTs is stored onchain and created using Chainlink VRF.
+Once players have METAL tokens created from smelting ORE tokens, they can create NFT Items. These items vary by TYPE, MATERIAL, QUALITY, and COMBAT RATING. The TYPE of item is chosen by the player based on how many METAL tokens he or she is willing to spend. The MATERIAL is determined by which METAL token the player will spend to create the item (IRON, NICKEL, COPPER, GOLD, or PLATINUM). The QUALITY and COMBAT RATING of the items are determined by Chainlink VRF requests. 
+
+<strong>The results of the VRF requests are used in the NFT Item metadata, which is encoded to Base64 and stored onchain.</strong> 
 
 
 1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items Minting Contract</a>
