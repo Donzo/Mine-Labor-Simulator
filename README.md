@@ -52,6 +52,6 @@ Once players have METAL tokens created from smelting ORE tokens, they can visit 
 
 1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items ERC 721 Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0xe93fdfab027cb135ef2d8419214498918b7d98e4#code' target='_blank'>NFT Description Generator</a>
-3. <a href='https://goerli.etherscan.io/address/0x34b6559be9fdd081ce3c34e7078c438d938894bc#code' target='_new'>VRF Request and Item Maker Contract</a>
+3. <a href='https://goerli.etherscan.io/address/0x232ec3316bebcdf62f8ad81f1e1ee9d5ca8898da#code' target='_new'>VRF Request and Item Maker Contract</a>
 
 
