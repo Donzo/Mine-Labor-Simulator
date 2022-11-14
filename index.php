@@ -50,6 +50,9 @@
 		var smeltShopInside = new Image();
 		smeltShopInside.src = 'media/smelt-shop-inside.png';
 		
+		var storeInside = new Image();
+		storeInside.src = 'media/store-inside.png';
+		
 		function startTheGame(){
 			connectWallet();
 			//ig.game.startGame();
@@ -79,5 +82,7 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi2.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi3.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi4.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/abi5.php'); ?>
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/smelt-ore.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/code/js/make-item.php'); ?>
 </html>
