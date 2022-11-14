@@ -50,5 +50,8 @@ Once players have METAL tokens created from smelting ORE tokens, they can visit 
 <strong>The results of the VRF requests are used in the NFT Item metadata, which is encoded to Base64 and stored onchain.</strong> 
 
 
-1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items Minting Contract</a>
+1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items ERC 721 Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0xe93fdfab027cb135ef2d8419214498918b7d98e4#code' target='_blank'>NFT Description Generator</a>
+3. <a href='https://goerli.etherscan.io/address/0x34b6559be9fdd081ce3c34e7078c438d938894bc#code' target='_blank'>VRF Request and Item Maker Contract</a>
+
+
