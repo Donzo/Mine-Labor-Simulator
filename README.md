@@ -1,23 +1,37 @@
 # Mine Labor Simulator
-Web 3 game and project for Chainlink Fall 2022 Hackathon. 
+Web 3 game and project for the Chainlink Fall 2022 Hackathon. 
 
+<h3>Play Now</h3>
 Prove your work by mining blocks at <a href='https://minelaborsimulator.com/' target='_blank'> Mine Labor Simulator</a>. 
 
-The player smashes mining blocks repeatedly with a pick axe. It is hard work. Some blocks contain ORE tokens. You can mint the ORE tokens that you mine. 
+<h2>Mint Ore Tokens with ANY API Request</h2>
+In this game players break blocks with a pick axe. <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/php/check-for-ore.php' target='_blank'>Some blocks contain ORE tokens</a>. ORE tokens are stored serverside in the database until the player <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/js/mint-ore.php' target='_blank'>MINTs</a> them. 
 
-I wanted the players to pay for the cost of minting the token, so they buy LINK onchain and send it to the contract with the oracle. This contract owns the ORE token contract and will mint it for the requesting player with a successful request.
+In order to MINT the ORE tokens, the player <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/eth-wrap-and-swap.sol' target='_blank'>wraps ETH</a> and <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/buyLink.sol' target='_blank'>swaps it for LINK tokens</a>. The LINK tokens are sent to <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/oreQueryAndMint.%10sol' target='_blank'>the MINTING contract</a>, which uses <strong>ANY API to GET the player's ORE balance</strong> and MINTS that amount of ORE tokens. 
 
-The contracts have been deployed on Goerli. View them here:
+<h3>Contracts for MINTING ORE</h3>
+
+The contracts for MINTING ORE have been deployed on Goerli. View them here:
 
 1. <a href='https://goerli.etherscan.io/address/0xd14cCfdA73b3b9e98f872dC51aA05B5b80D900C4#code' target='_blank'>Wrap Eth and Pass to Swap Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0xD35c9101485A56A171c038282132556a95504A6E#code' target='_blank'>Swap WETH for LINK Fees Contract</a>
 3. <a href='https://goerli.etherscan.io/address/0x0701dba7588e9908c12d88d14aa02297354f9e11#code' target='_blank'>GET Request to the Server Using Chainlink Oracle Contract</a>
 4. <a href='https://goerli.etherscan.io/address/0x92C92a9E71a6CFcd39B621eb66804Ac28186849F#code' target='_blank'>Ore Token Contract</a>
 
-I am thinking about an ORE release schedule, where ORE becomes harder to mine as supply grows. I also want to create more serverside checks to protect the integrity of the ORE supply. But the next step for me is to integrate VRF so the player can smelt ORE into random elements like iron, copper, or gold.
+After minting the ORE tokens, the players in-game ORE balance drops to zero. The ORE tokens now live in the players Web3 wallet. <strong>But what can the player do with ORE tokens?</strong>
 
-<h2>VRF Intgration into ORE Smelting</h2>
-The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contracts that I am using:
+
+<h2>Smelt Ore with VRF Intgration</h2>
+
+Once the players ORE tokens have been minted into their web3 wallet, they can <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/js/smelt-ore.php' target='_blank'>SMELT their ORE tokens</a>. Players goes to the blacksmith shop in-game. In this shop players are presented with the option to SMELT their ORE tokens.  
+
+The process of SMELTING ORE involves transferring the ORE tokens to <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/smelter.sol' target='_blank'>a smart contract, which makes a Chainlink VRF request</a>. Before doing this, the player swaps some ETH for some LINK to <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/load-smelter.sol' target='_blank'>FUEL THE SMELTER</a>.
+
+Once the smelter has been fueled and the player has transferred his or her ORE tokens, the SMELTING contract makes a VRF request. Based on the result, <strong>the SMELTING contract will MINT one of several METAL tokens of varying rarirty: IRON, NICKEL, COPPER, GOLD, or PLATINUM</strong>.
+
+<h3>Contracts for SMELTING ORE</h3>
+
+The contracts for SMELTING ORE been deployed on Goerli. View them here:
 
 1. <a href='https://goerli.etherscan.io/address/0x9f659da618419a3baddb9a2a9cb2bb8a1584237f#code' target='_blank'>Smelting Contract</a>
 2. <a href='https://goerli.etherscan.io/address/0x91fe1517fdf17ae2c338602d14a3e156013e61d2#code' target='_blank'>Swap Contract for Smelter</a>
@@ -27,6 +41,17 @@ The game will use Chainlink VRFs to smelt ORE tokens. Here are some of the contr
 6. <a href='https://goerli.etherscan.io/address/0x01f1fb3293546e257c7fa94ff04b5ab314bdee50#code' target='_blank'>Gold Token</a>
 7. <a href='https://goerli.etherscan.io/address/0xffb97dc57c5d891560aae5af5460fcf69a217e64#code' target='_blank'>Platinum Token</a>
 
+After SMELTING the ORE tokens, the player will no longer have ORE tokens in his or her wallet. Instead the player will receive METAL tokens based on the VRF result. These METAL tokens will live in the player's Web3 wallet. <strong>But what can the player do with METAL tokens?</strong>
+
+<h2>Create NFT ITEMS with VRF Integration</h2>
+
+Once players have METAL tokens created from smelting ORE tokens, they can visit an in-game store to create NFT Items. These items vary by TYPE, MATERIAL, QUALITY, and COMBAT RATING. The TYPE of item is chosen by the player based on how many METAL tokens he or she is willing to spend. The MATERIAL is determined by which METAL token the player will spend to create the item (IRON, NICKEL, COPPER, GOLD, or PLATINUM). The QUALITY and COMBAT RATING of the items are determined by Chainlink VRF requests. 
+
+<strong>The results of the VRF requests are used in the NFT Item metadata, which is encoded to Base64 and stored onchain.</strong> 
 
 
-More to come soon.
+1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items ERC 721 Contract</a>
+2. <a href='https://goerli.etherscan.io/address/0xe93fdfab027cb135ef2d8419214498918b7d98e4#code' target='_blank'>NFT Description Generator</a>
+3. <a href='https://goerli.etherscan.io/address/0x232ec3316bebcdf62f8ad81f1e1ee9d5ca8898da#code' target='_new'>VRF Request and Item Maker Contract</a>
+
+
