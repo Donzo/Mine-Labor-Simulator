@@ -55,3 +55,7 @@ Once players have METAL tokens created from smelting ORE tokens, they can visit 
 3. <a href='https://goerli.etherscan.io/address/0x232ec3316bebcdf62f8ad81f1e1ee9d5ca8898da#code' target='_new'>VRF Request and Item Maker Contract</a>
 
 
+<h2>Technologies</h2>
+This project was made possible by Chainlink and open source technologies. I used <a href='https://github.com/phoboslab/Impact'>ImpactJS for the game engine</a> and the <a href='https://github.com/web3/web3.js'>Web3JS plugin</a>. I integrated existing assets from my <a href='https://ereadinggames.com/'>other games</a> so that I could focus on engineering the smart contracts. I'm using a MySQL database to store ORE token counts prior to MINTING. And I'm using PHP to perform serverside checks and to connect to the database.
+
+I hope you like my project.
