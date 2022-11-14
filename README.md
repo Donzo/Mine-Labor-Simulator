@@ -51,4 +51,4 @@ Once players have METAL tokens created from smelting ORE tokens, they can visit 
 
 
 1. <a href='https://goerli.etherscan.io/address/0x54630734636ba61dd1ede7e4481ab0f36abbdf0d#code' target='_blank'>NFT Items Minting Contract</a>
-2. <a href='https://goerli.etherscan.io/address/0xcf6646999d5c191058b2e8ab1aa59a03d8c8b43c#code' target='_blank'>NFT Description Generator</a>
+2. <a href='https://goerli.etherscan.io/address/0xe93fdfab027cb135ef2d8419214498918b7d98e4#code' target='_blank'>NFT Description Generator</a>
