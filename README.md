@@ -58,4 +58,5 @@ Once players have METAL tokens created from smelting ORE tokens, they can visit 
 <h2>Technologies</h2>
 This project was made possible by Chainlink and open source technologies. I used <a href='https://github.com/phoboslab/Impact'>ImpactJS for the game engine</a> and the <a href='https://github.com/web3/web3.js'>Web3JS plugin</a>. I integrated existing assets from my <a href='https://ereadinggames.com/'>other games</a> so that I could focus on engineering the smart contracts. I used <a href='https://github.com/Uniswap/v3-core' target='_blank'>Uniswap V3</a> to purchase LINK onchain. I used many <a href='https://github.com/OpenZeppelin/openzeppelin-contracts' target='_blank'>OpenZeppelin Libraries and Standard Deployments</a>. I'm using a MySQL database to store ORE token counts prior to MINTING. And I'm using PHP to perform serverside checks and to connect to the database.
 
+
 I hope you like my project.
