@@ -10,8 +10,23 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-	
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+	</style>
 	<style type="text/css">
+	/* press-start-2p-regular - latin */
+		@font-face {
+			font-family: 'Press Start 2P';
+			font-style: normal;
+			font-weight: 400;
+			src: url('/font/press-start-2p-v14-latin-regular.eot'); /* IE9 Compat Modes */
+			src: local(''),
+				url('/font/press-start-2p-v14-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+				url('/font/press-start-2p-v14-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+				url('/font/press-start-2p-v14-latin-regular.woff') format('woff'), /* Modern Browsers */
+				url('/font/press-start-2p-v14-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+				url('/font/press-start-2p-v14-latin-regular.svg#PressStart2P') format('svg'); /* Legacy iOS */
+		}
 		html,body {
 			background-color: #333;
 			color: #fff;
@@ -19,6 +34,7 @@
 			margin: 0;
 			padding: 0;
 			font-size: 12pt;
+			
 		}
 		
 		#canvas {

@@ -153,6 +153,8 @@
 		});
 	}
 	async function waitForOracle2(){
+		ig.game.confirmButtonsExist = false;
+		
 		let web3 = new Web3(Web3.givenProvider);
 		var itemMakerContractAddress = '0x232ec3316BebCdf62f8ad81f1e1Ee9d5cA8898dA';	
 		var contract = new web3.eth.Contract(abi5, itemMakerContractAddress, {});

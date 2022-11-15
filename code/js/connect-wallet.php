@@ -69,9 +69,8 @@
 			web3.eth.net.getId().then(
 				function(value) {
   					console.log('provider: ' + provider);
-  					ig.game.startGame();
   					provider = value;
-					reportProvider();						
+					reportProvider();					
   				}	
   			);			
 		}
@@ -124,12 +123,20 @@
 				theRPCURL = 'https://arb1.arbitrum.io/rpc';
 				nn = 'arbitrum';
 			}
+			else if (which == 7){
+				//Goerli
+				theChainID = '0x5';
+				theRPCURL = 'https://goerli.infura.io/v3/';
+				nn = 'goerli';
+			}
 			
 			try {
 					await window.ethereum.request({
 						method: 'wallet_switchEthereumChain',
 						params: [{ chainId: theChainID }],
 					});
+					getOreBalance();
+					ig.game.startGame();
 				} catch (switchError) {
   				// This error code indicates that the chain has not been added to MetaMask.
 				if (switchError.code === 4902) {
@@ -138,9 +145,11 @@
 							method: 'wallet_addEthereumChain',
 							params: [{ chainId: theChainID, rpcUrl: theRPCURL}],
 						});
+						getOreBalance();
+						ig.game.startGame();
 					}
 					catch (addError) {
-				
+						switchNetwork(which)
 					}
 				}
 			}
@@ -183,7 +192,17 @@
   			}
   			
   			console.log('User is on ' + networkName + ' with ID number ' + provider + ' and chainid ' + chainId + '.');
-  			getOreBalance();
+  			
+  			if (chainId == "0x5" && provider == 5){
+  				getOreBalance();
+				ig.game.startGame();
+			}	
+  			else{
+  				//Get on Goerli
+  				switchNetwork(7);
+  			}
+  			
+  			
 		}
 		
 		

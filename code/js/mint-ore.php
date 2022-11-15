@@ -66,7 +66,7 @@
 			maxPriorityFeePerGas:5000000000
 		}, function(){
 			ig.game.textBox = true;
-			ig.game.txtBoxTxt = "You are extracting your ORE. . . ";
+			ig.game.txtBoxTxt = "You are extracting your ORE. .";
 			ig.game.txtBoxTxtSize = 2;
 			ig.game.txtBoxHeight = .25;
 			ig.game.textBoxTicker = true;
@@ -84,6 +84,10 @@
 			ig.game.txtBoxTxt = "Success! Transaction Mined. Ore Extracted.";
 			ig.game.textBoxTicker = false;
 			ig.game.playExtractOre();
+			const delayCheckOreBalance = setTimeout(function(){ 
+				getOreBalance();
+			}, 20000);
+			
 		});
 			
 	}

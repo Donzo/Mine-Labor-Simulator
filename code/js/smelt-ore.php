@@ -66,6 +66,7 @@
 		});
 	}
 	async function waitForOracle(){
+		ig.game.confirmButtonsExist = false;
 		let web3 = new Web3(Web3.givenProvider);
 		var smeltingContractAddress = '0x9f659Da618419A3BADdB9a2a9cb2bB8a1584237F';	
 		var contract = new web3.eth.Contract(abi4, smeltingContractAddress, {});
@@ -102,7 +103,7 @@
 		
 		const changeTextSoon6 = setTimeout(function(){ 
 			if (ig.game.textBoxTicker){
-				ig.game.txtBoxTxt = "Back then we could get two onions for a twelve and a half cents, which we called a bit. .";
+				ig.game.txtBoxTxt = "Back then we could get two onions for twelve and a half cents, which we called a bit. .";
 			}
 		}, 90000);
 		
