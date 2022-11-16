@@ -1,5 +1,6 @@
 <script>
 	var myRequestID;
+	var requiredEth;
 	
 	async function getOreBalance(){
 		let web3 = new Web3(Web3.givenProvider);
@@ -14,10 +15,9 @@
 	}
 	async function estimateEth(){
 		let web3 = new Web3(Web3.givenProvider);
-		var myContractAddress = '0xD35c9101485A56A171c038282132556a95504A6E';
+		var myContractAddress = '0x91Fe1517FDf17Ae2C338602d14A3E156013E61d2';
 		var myContract = new web3.eth.Contract(abi2, myContractAddress, {});
-		requiredEth = (await myContract.methods.getEstimatedETHforLINK("1300000000000000000").call())[0];
-		sendEth = Math.ceil(requiredEth * 15000);
+		requiredEth = (await myContract.methods.getEstimatedETHforLINK("5000000000000000000").call())[0];
 	}
 	
 	async function smeltMyOre(){
@@ -49,12 +49,13 @@
 		var smeltingContractAddress = '0x9f659Da618419A3BADdB9a2a9cb2bB8a1584237F';	
 		var contract = new web3.eth.Contract(abi4, smeltingContractAddress, {});
 		await estimateEth();
-		sendEth = sendEth.toString()
-		myVal = web3.utils.toWei(sendEth, "Gwei");
+		requiredEth = requiredEth;
+		sendEth = requiredEth.toString()
+		//myVal = web3.utils.toWei(sendEth, "ether");
 		await contract.methods.loadSmelter(window.oreInWallet).send({
 			from: window['userAccountNumber'],
-			//value: web3.utils.toWei(sendEth, "ether"),
-			value: web3.utils.toWei("0.01", "ether"),
+			//value: myVal,
+			value: web3.utils.toWei("12500000", "gwei"),
 			gas: 1500000,
 			maxPriorityFeePerGas:5000000000
 			
@@ -146,7 +147,7 @@
 			}
 			else if (_ranNum > 64){
 				alloyName = "NICKEL";
-				afterThought = " That useful for armor plating.";
+				afterThought = " That's useful for armor plating.";
 			}
 			else if (_ranNum > 38){
 				alloyName = "COPPER";

@@ -11,7 +11,7 @@
 		const result = await ironContract.methods.balanceOf(window['userAccountNumber']).call();
 		window.ironInWallet = result;
 		const ironInWalletFlat = Math.round(web3.utils.fromWei(result) * 100) / 100;
-  		console.log("ironInWallet: " + ironInWalletFlat);
+  		//console.log("ironInWallet: " + ironInWalletFlat);
   		ig.game.pData.ironBalance = ironInWalletFlat;
   		
   		//Get Copper
@@ -20,7 +20,7 @@
 		const result2 = await copperContract.methods.balanceOf(window['userAccountNumber']).call();
 		window.copperInWallet = result2;
 		const copperInWalletFlat = Math.round(web3.utils.fromWei(result2) * 100) / 100;
-  		console.log("copperInWallet: " + copperInWalletFlat);
+  		//console.log("copperInWallet: " + copperInWalletFlat);
   		ig.game.pData.copperBalance = copperInWalletFlat;
   		
   		//Get Nickel
@@ -29,7 +29,7 @@
 		const result3 = await nickelContract.methods.balanceOf(window['userAccountNumber']).call();
 		window.nickelInWallet = result3;
 		const nickelInWalletFlat = Math.round(web3.utils.fromWei(result3) * 100) / 100;
-  		console.log("nickelInWallet: " + nickelInWalletFlat);
+  		//console.log("nickelInWallet: " + nickelInWalletFlat);
   		ig.game.pData.nickelBalance = nickelInWalletFlat;
   		
   		//Get Gold
@@ -38,7 +38,7 @@
 		const result4 = await goldContract.methods.balanceOf(window['userAccountNumber']).call();
 		window.goldInWallet = result4;
 		const goldInWalletFlat = Math.round(web3.utils.fromWei(result4) * 100) / 100;
-  		console.log("goldInWallet: " + goldInWalletFlat);
+  		//console.log("goldInWallet: " + goldInWalletFlat);
   		ig.game.pData.goldBalance = goldInWalletFlat;
   		
   		//Get Platinum
@@ -47,7 +47,7 @@
 		const result5 = await platinumContract.methods.balanceOf(window['userAccountNumber']).call();
 		window.platinumInWallet = result5;
 		const platinumInWalletFlat = Math.round(web3.utils.fromWei(result5) * 100) / 100;
-  		console.log("platinumInWallet: " + platinumInWalletFlat);
+  		//console.log("platinumInWallet: " + platinumInWalletFlat);
   		ig.game.pData.platinumBalance = platinumInWalletFlat;
 	}
 	
@@ -76,11 +76,11 @@
 			contractAddress = '0xd020ee009eBa367b279546C9Ed47Ba49A0Bcb159';
 			metalTokenBalance = window.ironInWallet;
 		}
-		console.log('metal = ' + metal + ' and contractAddress = ' + contractAddress)
+		//console.log('metal = ' + metal + ' and contractAddress = ' + contractAddress)
 		var itemMakerContractAddress = '0x232ec3316BebCdf62f8ad81f1e1Ee9d5cA8898dA'; //Gonna need to change this if IT DOESNT WORK CHECK HERE.
 		var contract = new web3.eth.Contract(abi3, contractAddress, {});
 		const allowance = await contract.methods.allowance(window['userAccountNumber'], itemMakerContractAddress).call();
-		console.log('my ' + metal + ' allowance = ' + allowance);
+		//console.log('my ' + metal + ' allowance = ' + allowance);
 		
 		
 		
@@ -206,18 +206,17 @@
 				ig.game.txtBoxTxt = "I think it's ready. .";
 			}
 		}, 120000);
-		//event RequestFulfilled(uint256 requestId, uint256 randomNum1, uint256 randomNum2);
+		
 		myRequestID = await contract.methods.lastRequestID.call();
 		console.log('myRequestID = ' + myRequestID);
 		contract.events.RequestFulfilled({
-			filter: {requestId: myRequestID}, // Using an array means OR: e.g. 20 or 23
+			filter: {requestId: myRequestID}, 
 			fromBlock: "pending"
 		}, function(error, event){ console.log(event); })
 		.on('data', function(event){
-			console.log("data:");
-			console.log("random num1 = " + event.returnValues.randomNum1);
-			console.log("random num2 = " + event.returnValues.randomNum2);
-			console.log(event); // same results as the optional callback above
+			//console.log("random num1 = " + event.returnValues.randomNum1);
+			//console.log("random num2 = " + event.returnValues.randomNum2);
+			console.log(event); 
 			ig.game.textBoxTicker = false;
 			ig.game.playSmeltOre();
 			var _quality = event.returnValues.randomNum1;

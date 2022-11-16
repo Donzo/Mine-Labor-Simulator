@@ -68,7 +68,7 @@
 			//Get Provider
 			web3.eth.net.getId().then(
 				function(value) {
-  					console.log('provider: ' + provider);
+  					//console.log('provider: ' + provider);
   					provider = value;
 					reportProvider();					
   				}	
@@ -78,7 +78,7 @@
 			fetch('/code/php/signin.php?wallet=' + window['userAccountNumber'])
 			.then(response => response.text())
    			.then((response) => {
-       			console.log("Response is " + response);
+       			//console.log("Response is " + response);
 			})
 		}
 		async function switchNetwork(which){
