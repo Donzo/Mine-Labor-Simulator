@@ -63,6 +63,9 @@ Once players have METAL tokens created from smelting ORE tokens, they can visit 
 4. <a href='https://testnets.opensea.io/collection/mine-labor-simulator' target='_blank'>View the Project on OpenSea Testnet</a>
 
 <h2>Technologies</h2>
+
+<img src='https://minelaborsimulator.com/images-and-demo/screen-shot-05-min.png' width="500px" align="right"/>
+
 This project was made possible by Chainlink and open source technologies. I used <a href='https://github.com/phoboslab/Impact'>ImpactJS for the game engine</a> and the <a href='https://github.com/web3/web3.js'>Web3JS plugin</a>. I integrated existing assets from my <a href='https://ereadinggames.com/'>other games</a> so that I could focus on engineering the smart contracts. I used <a href='https://github.com/Uniswap/v3-core' target='_blank'>Uniswap V3</a> to purchase LINK onchain. I used many <a href='https://github.com/OpenZeppelin/openzeppelin-contracts' target='_blank'>OpenZeppelin Libraries and Standard Deployments</a>. I'm using a MySQL database to store ORE token counts prior to MINTING. And I'm using PHP to perform serverside checks and to connect to the database.
 
 
