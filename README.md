@@ -50,6 +50,8 @@ After SMELTING the ORE tokens, the player will no longer have ORE tokens in his 
 
 <h2>Create NFT ITEMS with VRF Integration</h2>
 
+<img src='https://minelaborsimulator.com/images-and-demo/screen-shot-03-min.png' width="500px" align="right"/>
+
 Once players have METAL tokens created from smelting ORE tokens, they can visit an in-game store to create NFT Items. These items vary by TYPE, MATERIAL, QUALITY, and COMBAT RATING. The TYPE of item is chosen by the player based on how many METAL tokens he or she is willing to spend. The MATERIAL is determined by which METAL token the player will spend to create the item (IRON, NICKEL, COPPER, GOLD, or PLATINUM). The QUALITY and COMBAT RATING of the items are determined by Chainlink VRF requests. 
 
 <strong>The results of the VRF requests are used in the NFT Item metadata, which is encoded to Base64 and stored onchain.</strong> 
