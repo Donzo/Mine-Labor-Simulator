@@ -21,7 +21,7 @@ The contracts for MINTING ORE have been deployed on Goerli. View them here:
 3. <a href='https://goerli.etherscan.io/address/0x0701dba7588e9908c12d88d14aa02297354f9e11#code' target='_blank'>GET Request to the Server Using Chainlink Oracle Contract</a>
 4. <a href='https://goerli.etherscan.io/address/0x92C92a9E71a6CFcd39B621eb66804Ac28186849F#code' target='_blank'>Ore Token Contract</a>
 
-After minting the ORE tokens, the players in-game ORE balance drops to zero. The ORE tokens now live in the players Web3 wallet. <strong>But what can the player do with ORE tokens?</strong>
+After minting the ORE tokens, the players in-game ORE balance drops to zero. The ORE tokens now live in the player's Web3 wallet. <strong>But what can the player do with ORE tokens?</strong>
 
 
 <h2>Smelt Ore with VRF Intgration</h2>
