@@ -28,7 +28,7 @@ After minting the ORE tokens, the players in-game ORE balance drops to zero. The
 
 <img src='https://minelaborsimulator.com/images-and-demo/screen-shot-02-min.png' width="500px" align="right"/>
 
-Once the players ORE tokens have been minted into their web3 wallet, they can <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/js/smelt-ore.php' target='_blank'>SMELT their ORE tokens</a>. Players goes to the blacksmith shop in-game. In this shop players are presented with the option to SMELT their ORE tokens.  
+Once the player's ORE tokens have been minted into their web3 wallet, they can <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/js/smelt-ore.php' target='_blank'>SMELT their ORE tokens</a>. Players goes to the blacksmith shop in-game. In this shop players are presented with the option to SMELT their ORE tokens.  
 
 The process of SMELTING ORE involves transferring the ORE tokens to <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/smelter.sol' target='_blank'>a smart contract, which makes a Chainlink VRF request</a>. Before doing this, the player swaps some ETH for some LINK to <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/sol/load-smelter.sol' target='_blank'>FUEL THE SMELTER</a>.
 
