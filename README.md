@@ -2,9 +2,10 @@
 Web 3 game and project for the Chainlink Fall 2022 Hackathon. 
 
 <h3>Play Now</h3>
-Prove your work by mining blocks at <a href='https://minelaborsimulator.com/' target='_blank'> Mine Labor Simulator</a>. 
 
 <img src='https://minelaborsimulator.com/images-and-demo/screen-shot-01-min.png' width="500px" align="right"/>
+
+Prove your work by mining blocks at <a href='https://minelaborsimulator.com/' target='_blank'> Mine Labor Simulator</a>. 
 
 <h2>Mint Ore Tokens with ANY API Request</h2>
 In this game players break blocks with a pick axe. <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/php/check-for-ore.php' target='_blank'>Some blocks contain ORE tokens</a>. ORE tokens are stored serverside in the database until the player <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/js/mint-ore.php' target='_blank'>MINTs</a> them. 
@@ -24,6 +25,8 @@ After minting the ORE tokens, the players in-game ORE balance drops to zero. The
 
 
 <h2>Smelt Ore with VRF Intgration</h2>
+
+<img src='https://minelaborsimulator.com/images-and-demo/screen-shot-02-min.png' width="500px" align="right"/>
 
 Once the players ORE tokens have been minted into their web3 wallet, they can <a href='https://github.com/Donzo/Mine-Labor-Simulator/blob/main/code/js/smelt-ore.php' target='_blank'>SMELT their ORE tokens</a>. Players goes to the blacksmith shop in-game. In this shop players are presented with the option to SMELT their ORE tokens.  
 
